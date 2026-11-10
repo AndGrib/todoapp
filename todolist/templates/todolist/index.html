@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What to do today</title>
+  <!-- Local fonts (no internet needed) -->
+  <link rel="stylesheet" href="{% static 'todolist/bs/css/fonts.css' %}" />
+  <link rel="stylesheet" href="{% static 'todolist/style.css' %}" />
+</head>
+<body>
+
+  <main class="app">
+
+    <header class="app-header">
+      <div>
+        <p class="date">Sunday, 8 November</p>
+        <h1>What to do today</h1>
+      </div>
+
+      <div class="progress" aria-label="2 of 5 tasks done">
+        <span class="progress-count"><strong>2</strong> of 5 done</span>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: 40%"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Add form -->
+    <form class="add-form" action="#" method="post">
+      <label class="visually-hidden" for="new-todo">New task</label>
+      <input id="new-todo" name="title" type="text" placeholder="Add a task, e.g. Grocery shopping" autocomplete="off">
+      <button type="submit" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        Add task
+      </button>
+    </form>
+
+    <!-- Filters -->
+    <nav class="filters" aria-label="Filter tasks">
+      <a href="#" class="filter is-active" aria-current="page">All <span>5</span></a>
+      <a href="#" class="filter">Active <span>3</span></a>
+      <a href="#" class="filter">Done <span>2</span></a>
+    </nav>
+
+    <!-- Task list -->
+    <ul class="todo-list">
+
+      <li class="todo">
+        <input type="checkbox" id="todo-1" class="todo-check">
+        <label for="todo-1" class="todo-label">
+          <span class="box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="todo-text">Coding for beginners</span>
+        </label>
+        <button class="icon-btn" type="button" aria-label="Delete “Coding for beginners”">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        </button>
+      </li>
+
+      <li class="todo">
+        <input type="checkbox" id="todo-2" class="todo-check">
+        <label for="todo-2" class="todo-label">
+          <span class="box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="todo-text">Python functions, objects, and classes</span>
+        </label>
+        <button class="icon-btn" type="button" aria-label="Delete “Python functions, objects, and classes”">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        </button>
+      </li>
+
+      <li class="todo">
+        <input type="checkbox" id="todo-3" class="todo-check">
+        <label for="todo-3" class="todo-label">
+          <span class="box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="todo-text">Finish the Django to-do app</span>
+        </label>
+        <button class="icon-btn" type="button" aria-label="Delete “Finish the Django to-do app”">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        </button>
+      </li>
+
+      <li class="todo">
+        <input type="checkbox" id="todo-4" class="todo-check" checked>
+        <label for="todo-4" class="todo-label">
+          <span class="box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="todo-text">Thank my wonderful teachers</span>
+        </label>
+        <button class="icon-btn" type="button" aria-label="Delete “Thank my wonderful teachers”">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        </button>
+      </li>
+
+      <li class="todo">
+        <input type="checkbox" id="todo-5" class="todo-check" checked>
+        <label for="todo-5" class="todo-label">
+          <span class="box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="todo-text">Grocery shopping</span>
+        </label>
+        <button class="icon-btn" type="button" aria-label="Delete “Grocery shopping”">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        </button>
+      </li>
+
+    </ul>
+
+    <!-- Bulk actions -->
+    <div class="bulk-actions">
+      <button type="button" class="btn btn-soft">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        Clear completed
+      </button>
+      <button type="button" class="btn btn-danger">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        Delete all
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 My Django To-do</p>
+  </footer>
+
+</body>
+</html>

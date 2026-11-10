@@ -1,0 +1,461 @@
+/* ==========================================================
+   To-do app mockup
+   Sections: tokens, base, layout, form, filters, list, buttons,
+             footer, dark mode, motion/responsive
+   ========================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* Colour */
+  --bg: #e9edf8;
+  --surface: #ffffff;
+  --surface-2: #f4f6fc;
+  --ink: #161a33;
+  --ink-soft: #5b6285;
+  --line: #dfe4f3;
+  --accent: #3d4dff;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6e9ff;
+  --done: #1f9d6b;
+  --danger: #d93a46;
+  --danger-soft: #fde8ea;
+
+  /* Type */
+  --font-display: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  /* Shape and depth */
+  --radius-lg: 28px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --shadow-panel: 0 1px 2px rgba(22, 26, 51, 0.04),
+                  0 24px 60px -20px rgba(40, 52, 140, 0.28);
+  --ring: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent);
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: clamp(16px, 5vw, 56px) 16px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 85% -10%, #d6dcff 0%, transparent 60%),
+    var(--bg);
+}
+
+h1, p, ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+svg {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Layout: the main panel ---------- */
+.app {
+  width: 100%;
+  max-width: 640px;
+  padding: clamp(20px, 5vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  display: grid;
+  gap: 24px;
+}
+
+.app-header {
+  display: grid;
+  gap: 20px;
+}
+
+.date {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 7vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+/* Progress */
+.progress {
+  display: grid;
+  gap: 8px;
+}
+
+.progress-count {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.progress-count strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.progress-track {
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+
+/* ---------- Add form ---------- */
+.add-form {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.add-form:focus-within {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+
+.add-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 8px 0 18px;
+  background: transparent;
+  border: 0;
+}
+
+.add-form input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+.add-form input:focus-visible {
+  box-shadow: none;
+}
+
+/* ---------- Filters (segmented control) ---------- */
+.filters {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  width: fit-content;
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  transition: color 0.2s, background 0.2s;
+}
+
+.filter span {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.filter:hover {
+  color: var(--ink);
+}
+
+.filter.is-active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(22, 26, 51, 0.12);
+}
+
+/* ---------- Task list ---------- */
+.todo-list {
+  display: grid;
+  gap: 8px;
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.todo:hover {
+  border-color: #c3caea;
+}
+
+/* The real checkbox is visually hidden; the label draws the custom one */
+.todo-check {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.todo-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 8px 12px 12px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.box {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border: 2px solid #b9c1e3;
+  border-radius: 8px;
+  color: transparent;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.box svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 3;
+}
+
+.todo-label:hover .box {
+  border-color: var(--accent);
+}
+
+.todo-text {
+  overflow-wrap: anywhere;
+  transition: color 0.2s;
+}
+
+/* Checked state: no JavaScript needed for the mockup */
+.todo-check:checked + .todo-label .box {
+  background: var(--done);
+  border-color: var(--done);
+  color: #fff;
+}
+
+.todo-check:checked + .todo-label .todo-text {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: rgba(91, 98, 133, 0.5);
+}
+
+.todo-check:focus-visible + .todo-label {
+  box-shadow: var(--ring);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s, filter 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-soft {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn-soft:hover {
+  background: var(--accent-soft);
+}
+
+.btn-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.icon-btn:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.bulk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Dark mode ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1224;
+    --surface: #181c36;
+    --surface-2: #20254a;
+    --ink: #eef0ff;
+    --ink-soft: #9ba2cf;
+    --line: #2b3160;
+    --accent: #7886ff;
+    --accent-ink: #0f1224;
+    --accent-soft: #2a3170;
+    --done: #3fc790;
+    --danger: #ff7d86;
+    --danger-soft: #3a1d2c;
+    --shadow-panel: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+  }
+
+  body {
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #1f2559 0%, transparent 60%),
+      var(--bg);
+  }
+
+  .todo:hover {
+    border-color: #444c8c;
+  }
+
+  .box {
+    border-color: #4a5290;
+  }
+
+  .btn-danger:hover {
+    color: #0f1224;
+  }
+
+  .todo-check:checked + .todo-label .box {
+    color: #0f1224;
+  }
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .add-form .btn {
+    padding: 10px 14px;
+  }
+
+  .bulk-actions .btn {
+    flex: 1;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
