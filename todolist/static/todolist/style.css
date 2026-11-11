@@ -1,7 +1,7 @@
 /* ==========================================================
-   To-do app mockup
+   To-do app
    Sections: tokens, base, layout, form, filters, list, buttons,
-             footer, dark mode, motion/responsive
+             footer, dark mode, small screens, reduced motion
    ========================================================== */
 
 /* ---------- Design tokens ---------- */
@@ -207,9 +207,6 @@ h1 {
 }
 
 .filter {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   padding: 6px 14px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -217,11 +214,6 @@ h1 {
   text-decoration: none;
   border-radius: var(--radius-pill);
   transition: color 0.2s, background 0.2s;
-}
-
-.filter span {
-  font-size: 0.78rem;
-  color: var(--ink-soft);
 }
 
 .filter:hover {
@@ -248,21 +240,14 @@ h1 {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s;
 }
 
 .todo:hover {
   border-color: #c3caea;
 }
 
-/* The real checkbox is visually hidden; the label draws the custom one */
-.todo-check {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
+/* Left part of a task: the box and the text */
 .todo-label {
   flex: 1;
   min-width: 0;
@@ -270,8 +255,12 @@ h1 {
   align-items: center;
   gap: 14px;
   padding: 12px 8px 12px 12px;
-  cursor: pointer;
-  border-radius: 12px;
+}
+
+/* If you make the text or the whole task a link, it won't turn blue */
+.todo a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .box {
@@ -292,30 +281,31 @@ h1 {
   stroke-width: 3;
 }
 
-.todo-label:hover .box {
-  border-color: var(--accent);
-}
-
 .todo-text {
   overflow-wrap: anywhere;
   transition: color 0.2s;
 }
 
-/* Checked state: no JavaScript needed for the mockup */
-.todo-check:checked + .todo-label .box {
+/* Completed task: the <li> has the extra class "done" */
+.todo.done .box {
   background: var(--done);
   border-color: var(--done);
   color: #fff;
 }
 
-.todo-check:checked + .todo-label .todo-text {
+.todo.done .todo-text {
   color: var(--ink-soft);
   text-decoration: line-through;
   text-decoration-color: rgba(91, 98, 133, 0.5);
 }
 
-.todo-check:focus-visible + .todo-label {
-  box-shadow: var(--ring);
+/* Shown when the list is empty */
+.empty {
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--ink-soft);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
 }
 
 /* ---------- Buttons ---------- */
@@ -435,7 +425,7 @@ h1 {
     color: #0f1224;
   }
 
-  .todo-check:checked + .todo-label .box {
+  .todo.done .box {
     color: #0f1224;
   }
 }

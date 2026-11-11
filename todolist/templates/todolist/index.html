@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>What to do today</title>
+
   <!-- Local fonts (no internet needed) -->
-  <link rel="stylesheet" href="{% static 'todolist/bs/css/fonts.css' %}" />
-  <link rel="stylesheet" href="{% static 'todolist/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'todolist/bs/css/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'todolist/style.css' %}">
 </head>
 <body>
 
@@ -19,6 +20,7 @@
         <h1>What to do today</h1>
       </div>
 
+      <!-- Static for now: the numbers will become dynamic later -->
       <div class="progress" aria-label="2 of 5 tasks done">
         <span class="progress-count"><strong>2</strong> of 5 done</span>
         <div class="progress-track">
@@ -37,83 +39,44 @@
       </button>
     </form>
 
-    <!-- Filters -->
+    <!-- Filters (static for now) -->
     <nav class="filters" aria-label="Filter tasks">
-      <a href="#" class="filter is-active" aria-current="page">All <span>5</span></a>
-      <a href="#" class="filter">Active <span>3</span></a>
-      <a href="#" class="filter">Done <span>2</span></a>
+      <a href="#" class="filter is-active" aria-current="page">All</a>
+      <a href="#" class="filter">Active</a>
+      <a href="#" class="filter">Done</a>
     </nav>
 
-    <!-- Task list -->
+    <!-- Task list: one <li> per record in the database -->
     <ul class="todo-list">
-
-      <li class="todo">
-        <input type="checkbox" id="todo-1" class="todo-check">
-        <label for="todo-1" class="todo-label">
+      <!-- Example of a completed task: the extra class "done" -->
+          {% for todolist in todo_items %}
+          {% if todolist.completed %}
+      <li class="todo done">
+        <div class="todo-label">
           <span class="box" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
           </span>
-          <span class="todo-text">Coding for beginners</span>
-        </label>
-        <button class="icon-btn" type="button" aria-label="Delete “Coding for beginners”">
+          <span class="todo-text">{{todolist.text}}</span>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Delete task">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
         </button>
       </li>
-
+          {% else %}
+      <!-- Example of a not completed task -->
       <li class="todo">
-        <input type="checkbox" id="todo-2" class="todo-check">
-        <label for="todo-2" class="todo-label">
+        <div class="todo-label">
           <span class="box" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
           </span>
-          <span class="todo-text">Python functions, objects, and classes</span>
-        </label>
-        <button class="icon-btn" type="button" aria-label="Delete “Python functions, objects, and classes”">
+          <a class="todo-text" href="#"><span class="todo-text">{{todolist.text}}</span></a>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Delete task">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
         </button>
       </li>
-
-      <li class="todo">
-        <input type="checkbox" id="todo-3" class="todo-check">
-        <label for="todo-3" class="todo-label">
-          <span class="box" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-          </span>
-          <span class="todo-text">Finish the Django to-do app</span>
-        </label>
-        <button class="icon-btn" type="button" aria-label="Delete “Finish the Django to-do app”">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
-        </button>
-      </li>
-
-      <li class="todo">
-        <input type="checkbox" id="todo-4" class="todo-check" checked>
-        <label for="todo-4" class="todo-label">
-          <span class="box" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-          </span>
-          <span class="todo-text">Thank my wonderful teachers</span>
-        </label>
-        <button class="icon-btn" type="button" aria-label="Delete “Thank my wonderful teachers”">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
-        </button>
-      </li>
-
-      <li class="todo">
-        <input type="checkbox" id="todo-5" class="todo-check" checked>
-        <label for="todo-5" class="todo-label">
-          <span class="box" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-          </span>
-          <span class="todo-text">Grocery shopping</span>
-        </label>
-        <button class="icon-btn" type="button" aria-label="Delete “Grocery shopping”">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
-        </button>
-      </li>
-
-    </ul>
-
+          {% endif %}
+          {% endfor %}
     <!-- Bulk actions -->
     <div class="bulk-actions">
       <button type="button" class="btn btn-soft">
