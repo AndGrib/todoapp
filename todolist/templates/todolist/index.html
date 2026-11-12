@@ -16,23 +16,24 @@
 
     <header class="app-header">
       <div>
-        <p class="date">Sunday, 8 November</p>
-        <h1>What to do today</h1>
+        <p class="date">{{ today }}</p>
+        <h1>План на сегодня</h1>
       </div>
 
       <!-- Static for now: the numbers will become dynamic later -->
       <div class="progress" aria-label="2 of 5 tasks done">
-        <span class="progress-count"><strong>2</strong> of 5 done</span>
+        <span class="progress-count"><strong>{{ done }}</strong> of {{ total }} done</span>
         <div class="progress-track">
-          <div class="progress-fill" style="width: 40%"></div>
+          <div class="progress-fill" style="width: {{ percent }}%"></div>
         </div>
       </div>
     </header>
 
     <!-- Add form -->
-    <form class="add-form" action="#" method="post">
+    <form class="add-form" action="{% url 'add' %}" method="post">
+      {% csrf_token %}
       <label class="visually-hidden" for="new-todo">New task</label>
-      <input id="new-todo" name="title" type="text" placeholder="Add a task, e.g. Grocery shopping" autocomplete="off">
+      {{ form.text }}
       <button type="submit" class="btn btn-primary">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         Add task
@@ -41,9 +42,9 @@
 
     <!-- Filters (static for now) -->
     <nav class="filters" aria-label="Filter tasks">
-      <a href="#" class="filter is-active" aria-current="page">All</a>
-      <a href="#" class="filter">Active</a>
-      <a href="#" class="filter">Done</a>
+        <a href="?show=all" class="filter">All</a>
+        <a href="?show=active" class="filter">Active</a>
+        <a href="?show=done" class="filter">Done</a>    
     </nav>
 
     <!-- Task list: one <li> per record in the database -->
@@ -58,9 +59,11 @@
           </span>
           <span class="todo-text">{{todolist.text}}</span>
         </div>
-        <button class="icon-btn" type="button" aria-label="Delete task">
+        <form method="post" action="{% url 'deleteitem' todolist.id %}">
+          {% csrf_token %}
+        <button class="icon-btn" type="submit" aria-label="Delete task">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
-        </button>
+        </button></form>
       </li>
           {% else %}
       <!-- Example of a not completed task -->
@@ -69,24 +72,30 @@
           <span class="box" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
           </span>
-          <a class="todo-text" href="#"><span class="todo-text">{{todolist.text}}</span></a>
+          <a class="todo-text" href="{% url 'completed' todolist.id %}"><span class="todo-text">{{todolist.text}}</span></a>
         </div>
-        <button class="icon-btn" type="button" aria-label="Delete task">
+        <form method="post" action="{% url 'deleteitem' todolist.id %}">
+          {% csrf_token %}
+        <button class="icon-btn" type="submit" aria-label="Delete task">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
-        </button>
+        </button></form>
       </li>
           {% endif %}
           {% endfor %}
+      </ul>
     <!-- Bulk actions -->
     <div class="bulk-actions">
+      <a href="{% url 'deletecompleted' %}">
       <button type="button" class="btn btn-soft">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
         Clear completed
       </button>
+      </a>
+      <a href="{% url 'deleteall' %}">
       <button type="button" class="btn btn-danger">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
         Delete all
-      </button>
+      </button></a>
     </div>
 
   </main>
